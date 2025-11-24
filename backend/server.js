@@ -38,19 +38,38 @@ app.get('/', (req, res) => {
   res.json({ message: '학원 출결관리 시스템 API' });
 });
 
+// Vercel 서버리스 환경 감지
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV;
+
 // 서버 시작
 async function startServer() {
   try {
     await initDatabase();
-    // Cloud Run은 모든 IP에서 접근 가능하도록 '0.0.0.0' 바인딩
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
-    });
+    
+    // Vercel 환경에서는 app.listen 불필요 (서버리스 함수로 작동)
+    if (!isVercel) {
+      app.listen(PORT, '0.0.0.0', () => {
+        console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
+      });
+    } else {
+      console.log('Vercel 서버리스 환경에서 실행 중입니다.');
+    }
   } catch (error) {
     console.error('서버 시작 실패:', error);
-    process.exit(1);
+    if (!isVercel) {
+      process.exit(1);
+    }
   }
 }
 
-startServer();
+// Vercel이 아닌 환경에서만 직접 서버 시작
+if (!isVercel) {
+  startServer();
+} else {
+  // Vercel 환경에서는 데이터베이스만 초기화
+  initDatabase().catch(console.error);
+}
+
+// Vercel 서버리스 함수로 export
+module.exports = app;
 

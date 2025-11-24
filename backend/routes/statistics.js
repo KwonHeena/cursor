@@ -85,7 +85,7 @@ router.get('/student/:student_id', async (req, res) => {
     res.json({
       student: student[0],
       statistics: statusCounts,
-      total: totalRecords[0].total
+      total: totalRecords[0]?.total || 0
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
