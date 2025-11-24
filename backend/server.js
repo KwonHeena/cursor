@@ -1,4 +1,4 @@
-require('dotenv').config();
+corsOptionsrequire('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { initDatabase } = require('./db');
@@ -7,7 +7,21 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // 미들웨어
-app.use(cors());
+const corsOptions = {
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://cursor-iota-lilac.vercel.app/',
+    'https://cursor-front-tan.vercel.app/',
+    process.env.FRONTEND_URL,
+    /\.vercel\.app$/,
+    /\.netlify\.app$/,
+    /\.github\.io$/
+  ].filter(Boolean),
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // 라우트

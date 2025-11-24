@@ -79,6 +79,14 @@ DBeaver를 사용하여 데이터베이스를 확인하고 관리할 수 있습�
 - Database: SQLite
 - API: RESTful API
 
+## 배포하기
+
+다른 사람도 접속할 수 있도록 배포하는 방법:
+
+- **가장 쉬운 방법**: [QUICK_DEPLOY.md](./QUICK_DEPLOY.md) - Vercel 사용 (5분)
+- **상세 가이드**: [DEPLOY_VERCEL.md](./DEPLOY_VERCEL.md) - Vercel 상세 설명
+- **다양한 옵션**: [GITHUB_DEPLOY.md](./GITHUB_DEPLOY.md) - 여러 배포 방법
+
 ## GCP 배포
 
 GCP에 배포하는 방법은 다음 파일을 참고하세요:
