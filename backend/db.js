@@ -1,7 +1,18 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
+const os = require('os');
 
-const dbPath = path.join(__dirname, '../database/attendance.db');
+// Vercel 서버리스 환경에서는 /tmp 디렉토리 사용 (쓰기 가능)
+// 로컬 환경에서는 database 폴더 사용
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL_ENV;
+const dbDir = isVercel ? '/tmp' : path.join(__dirname, '../database');
+const dbPath = path.join(dbDir, 'attendance.db');
+
+// 디렉토리가 없으면 생성 (로컬 환경)
+if (!isVercel && !fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
 
 // 데이터베이스 연결
 const db = new sqlite3.Database(dbPath, (err) => {

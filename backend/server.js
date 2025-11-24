@@ -1,4 +1,4 @@
-corsOptionsrequire('dotenv').config();
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { initDatabase } = require('./db');
@@ -11,8 +11,8 @@ const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost:3000',
-    'https://cursor-iota-lilac.vercel.app/',
-    'https://cursor-front-tan.vercel.app/',
+    'https://cursor-iota-lilac.vercel.app',
+    'https://cursor-front-tan.vercel.app',
     process.env.FRONTEND_URL,
     /\.vercel\.app$/,
     /\.netlify\.app$/,
