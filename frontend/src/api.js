@@ -28,6 +28,7 @@ export const attendanceAPI = {
 // 통계 관련 API
 export const statisticsAPI = {
   getByClassroom: (classroom) => api.get(`/statistics/classroom/${classroom}`),
+  getByStudent: (studentId) => api.get(`/statistics/student/${studentId}`),
   getAll: () => api.get('/statistics/all'),
 };
 

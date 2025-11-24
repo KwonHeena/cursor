@@ -114,6 +114,7 @@ function AttendanceManagement() {
                   <td>
                     <button
                       className={`status-btn ${attendanceRecords[student.id] === '출석' ? 'active' : ''}`}
+                      data-status="출석"
                       onClick={() => handleAttendanceChange(student.id, '출석')}
                     >
                       출석
@@ -122,6 +123,7 @@ function AttendanceManagement() {
                   <td>
                     <button
                       className={`status-btn ${attendanceRecords[student.id] === '결석' ? 'active' : ''}`}
+                      data-status="결석"
                       onClick={() => handleAttendanceChange(student.id, '결석')}
                     >
                       결석
@@ -130,6 +132,7 @@ function AttendanceManagement() {
                   <td>
                     <button
                       className={`status-btn ${attendanceRecords[student.id] === '지각' ? 'active' : ''}`}
+                      data-status="지각"
                       onClick={() => handleAttendanceChange(student.id, '지각')}
                     >
                       지각
@@ -138,6 +141,7 @@ function AttendanceManagement() {
                   <td>
                     <button
                       className={`status-btn ${attendanceRecords[student.id] === '조퇴' ? 'active' : ''}`}
+                      data-status="조퇴"
                       onClick={() => handleAttendanceChange(student.id, '조퇴')}
                     >
                       조퇴

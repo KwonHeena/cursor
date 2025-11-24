@@ -1,23 +1,28 @@
 .attendance-management {
   background: white;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
 }
 
 .attendance-management h2 {
-  color: #333;
-  margin-bottom: 2rem;
-  font-size: 1.8rem;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .attendance-controls {
   display: flex;
   gap: 2rem;
   margin-bottom: 2rem;
-  padding: 1.5rem;
-  background-color: #f9f9f9;
+  padding: 1.75rem;
+  background: linear-gradient(to bottom, #f8fafc, #ffffff);
   border-radius: 8px;
+  border: 1px solid #e5e7eb;
   flex-wrap: wrap;
 }
 
@@ -28,25 +33,29 @@
 }
 
 .control-group label {
-  font-weight: 500;
-  color: #666;
-  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .control-group select,
 .control-group input {
-  padding: 0.75rem;
-  border: 1px solid #ddd;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #d1d5db;
   border-radius: 6px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   min-width: 200px;
+  transition: all 0.2s ease;
+  background-color: white;
 }
 
 .control-group select:focus,
 .control-group input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .attendance-list {
@@ -62,7 +71,7 @@
 }
 
 .attendance-list thead {
-  background-color: #667eea;
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
   color: white;
 }
 
@@ -87,46 +96,45 @@
 
 .status-btn {
   padding: 0.5rem 1rem;
-  border: 2px solid #ddd;
+  border: 1px solid #d1d5db;
   background-color: white;
-  color: #666;
+  color: #6b7280;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
   min-width: 80px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .status-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
-  background-color: #f0f0ff;
+  border-color: #2563eb;
+  color: #2563eb;
+  background-color: #eff6ff;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .status-btn.active {
-  background-color: #667eea;
   color: white;
-  border-color: #667eea;
+  border-color: transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-.status-btn.active:nth-child(1) {
-  background-color: #4caf50;
-  border-color: #4caf50;
+.status-btn.active[data-status="출석"] {
+  background-color: #10b981;
 }
 
-.status-btn.active:nth-child(2) {
-  background-color: #f44336;
-  border-color: #f44336;
+.status-btn.active[data-status="결석"] {
+  background-color: #ef4444;
 }
 
-.status-btn.active:nth-child(3) {
-  background-color: #ff9800;
-  border-color: #ff9800;
+.status-btn.active[data-status="지각"] {
+  background-color: #f59e0b;
 }
 
-.status-btn.active:nth-child(4) {
-  background-color: #9c27b0;
-  border-color: #9c27b0;
+.status-btn.active[data-status="조퇴"] {
+  background-color: #8b5cf6;
 }
 

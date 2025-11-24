@@ -5,6 +5,8 @@ import './StudentManagement.css';
 function StudentManagement() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filterClassroom, setFilterClassroom] = useState('all');
+  const [searchTerm, setSearchTerm] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     classroom: '1',
@@ -60,6 +62,14 @@ function StudentManagement() {
     }
   };
 
+  // 필터링된 학생 목록
+  const filteredStudents = students.filter(student => {
+    const matchClassroom = filterClassroom === 'all' || student.classroom === parseInt(filterClassroom);
+    const matchSearch = searchTerm === '' || student.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchClassroom && matchSearch;
+  });
+
+  // 교실별 통계
   const studentsByClassroom = {};
   students.forEach(student => {
     if (!studentsByClassroom[student.classroom]) {
@@ -103,35 +113,95 @@ function StudentManagement() {
       </div>
 
       <div className="student-list">
-        <h3>학생 목록</h3>
+        <div className="student-list-header">
+          <h3>학생 목록</h3>
+          <div className="list-filters">
+            <div className="filter-group">
+              <label>교실 필터:</label>
+              <select
+                value={filterClassroom}
+                onChange={(e) => setFilterClassroom(e.target.value)}
+              >
+                <option value="all">전체</option>
+                <option value="1">1호실</option>
+                <option value="2">2호실</option>
+                <option value="3">3호실</option>
+                <option value="4">4호실</option>
+                <option value="5">5호실</option>
+              </select>
+            </div>
+            <div className="filter-group">
+              <label>검색:</label>
+              <input
+                type="text"
+                placeholder="학생 이름 검색..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
+              />
+            </div>
+          </div>
+        </div>
+
         {loading ? (
-          <p>로딩 중...</p>
+          <p className="loading-text">로딩 중...</p>
         ) : students.length === 0 ? (
-          <p>등록된 학생이 없습니다.</p>
+          <p className="empty-text">등록된 학생이 없습니다.</p>
         ) : (
-          <div className="classroom-groups">
-            {[1, 2, 3, 4, 5].map(classroom => (
-              <div key={classroom} className="classroom-group">
-                <h4>{classroom}호실 ({studentsByClassroom[classroom]?.length || 0}명)</h4>
-                {studentsByClassroom[classroom] ? (
-                  <ul>
-                    {studentsByClassroom[classroom].map(student => (
-                      <li key={student.id}>
-                        <span>{student.name}</span>
+          <div className="student-table-container">
+            <table className="student-table">
+              <thead>
+                <tr>
+                  <th>번호</th>
+                  <th>이름</th>
+                  <th>교실</th>
+                  <th>등록일</th>
+                  <th>작업</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredStudents.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="empty-row">
+                      검색 결과가 없습니다.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredStudents.map((student, index) => (
+                    <tr key={student.id}>
+                      <td>{index + 1}</td>
+                      <td className="student-name">{student.name}</td>
+                      <td>
+                        <span className="classroom-badge">{student.classroom}호실</span>
+                      </td>
+                      <td className="date-cell">
+                        {new Date(student.created_at).toLocaleDateString('ko-KR')}
+                      </td>
+                      <td>
                         <button 
                           onClick={() => handleDelete(student.id)}
                           className="delete-btn"
                         >
                           삭제
                         </button>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>학생이 없습니다.</p>
+                      </td>
+                    </tr>
+                  ))
                 )}
+              </tbody>
+            </table>
+            <div className="table-footer">
+              <span className="total-count">
+                전체 {students.length}명 | 표시 {filteredStudents.length}명
+              </span>
+              <div className="classroom-summary">
+                {[1, 2, 3, 4, 5].map(classroom => (
+                  <span key={classroom} className="summary-badge">
+                    {classroom}호실: {studentsByClassroom[classroom]?.length || 0}명
+                  </span>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         )}
       </div>
